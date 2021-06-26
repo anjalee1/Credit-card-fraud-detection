@@ -4,14 +4,11 @@ import seaborn as sns
 
 
 data = pd.read_csv('creditcard.csv')
-
 print(data.columns)
-
 
 data = data.sample(frac=0.1, random_state = 1)
 print(data.shape)
 print(data.describe())
-
 
 data.hist(figsize = (20, 20))
 plt.show()
@@ -25,26 +22,16 @@ print(outlier_fraction)
 print('Fraud Cases: {}'.format(len(data[data['Class'] == 1])))
 print('Valid Transactions: {}'.format(len(data[data['Class'] == 0])))
 
-
 corrmat = data.corr()
 fig = plt.figure(figsize = (12, 9))
-
 sns.heatmap(corrmat, vmax = .8, square = True)
 plt.show()
 
-
 columns = data.columns.tolist()
-
-
 columns = [c for c in columns if c not in ["Class"]]
-
-
 target = "Class"
-
 X = data[columns]
 Y = data[target]
-
-
 print(X.shape)
 print(Y.shape)
 
@@ -55,7 +42,6 @@ from sklearn.neighbors import LocalOutlierFactor
 
 
 state = 1
-
 
 classifiers = {
     "Isolation Forest": IsolationForest(max_samples=len(X),
@@ -83,9 +69,7 @@ for i, (clf_name, clf) in enumerate(classifiers.items()):
 
     y_pred[y_pred == 1] = 0
     y_pred[y_pred == -1] = 1
-
     n_errors = (y_pred != Y).sum()
-
 
     print('{}: {}'.format(clf_name, n_errors))
     print(accuracy_score(Y, y_pred))
